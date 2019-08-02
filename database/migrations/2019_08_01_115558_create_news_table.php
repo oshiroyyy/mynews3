@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        User::create([
-                        'name' => "森本",
-                        'email' => "morimoto@tech.com",
-                        'password' => Hash::make("pass"),
-                    ]);
+        Schema::create('news', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->string('body');
+            $table->string('image_path')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -27,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('news');
     }
 }
