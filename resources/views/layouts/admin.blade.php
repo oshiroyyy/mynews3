@@ -44,7 +44,7 @@
 
                         </ul>
 
-                        <!-- Right Side Of Navbar -->
+                        <!-- left Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
                              <!-- Authentication Links -->
                         {{-- ログインしていなかったらログイン画面へのリンクを表示 --}}
