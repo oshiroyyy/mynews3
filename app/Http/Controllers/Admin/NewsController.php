@@ -91,6 +91,7 @@ class NewsController extends Controller
       // 該当するデータを上書きして保存する
       $news->fill($news_form)->save();
       
+      //HistoryModelに編集履歴を追加するように実装する
       $history = new History;
       $history->news_id = $news->id;
       $history->edited_at = Carbon::now();
