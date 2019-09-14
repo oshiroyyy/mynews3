@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\News;
+use App\History;
+use Carbon\Carbon;
 
 class NewsController extends Controller
 {
@@ -23,7 +25,7 @@ class NewsController extends Controller
       $form = $request->all();
       
       // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
-      if (isset($form['image'])) {
+      if ($form['image']) {
         $path = $request->file('image')->store('public/image');
         $news->image_path = basename($path);
       } else {
@@ -61,7 +63,7 @@ class NewsController extends Controller
       // News Modelからデータを取得する
       $news = News::find($request->id);
       if (empty($news)){
-        about(404);
+        abort(404);
       }
       return view ('admin.news.edit',['news_form' => $news]);
     }
@@ -88,8 +90,15 @@ class NewsController extends Controller
       
       // 該当するデータを上書きして保存する
       $news->fill($news_form)->save();
+      
+      $history = new History;
+      $history->news_id = $news->id;
+      $history->edited_at = Carbon::now();
+      $history->save();
+      
       return redirect('admin/news');
     }
+    
     public function delete(Request $request)
     {
       //該当するNews Modelを取得

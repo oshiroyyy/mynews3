@@ -1,5 +1,5 @@
-@extends('layouts.admin')
-@section('title', '登録済みニュースの一覧')
+@extends('layouts.profile')
+@section('title', '登録済みプロフィールの一覧')
 
 @section('content')
     <div class="container">
@@ -8,14 +8,14 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ action('Admin\NewsController@add') }}" role="button" class="btn btn-primary">新規作成</a>
+                <a href="{{ action('Admin\ProfileController@add') }}" role="button" class="btn btn-primary">新規作成</a>
             </div>
             <div class="col-md-8">
-                <form action="{{ action('Admin\NewsController@index') }}" method="get">
+                <form action="{{ action('Admin\ProfileController@index') }}" method="get">
                     <div class="form-group row">
                         <label class="col-md-2">タイトル</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
+                            <input type="text" class="form-control" name="cond_title" value={{ $cond_title }}>
                         </div>
                         <div class="col-md-2">
                             {{ csrf_field() }}
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="admin-news col-md-12 mx-auto">
+            <div class="admin-profile col-md-12 mx-auto">
                 <div class="row">
                     <table class="table table-dark">
                         <thead>
@@ -38,17 +38,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($posts as $news)
+                            @foreach($posts as $profile)
                                 <tr>
-                                    <th>{{ $news->id }}</th>
-                                    <td>{{ str_limit($news->title, 100) }}</td>
-                                    <td>{{ str_limit($news->body, 250) }}</td>
+                                    <th>{{ $profile->id }}</th>
+                                    <td>{{ str_limit($profile->title, 100) }}</td>
+                                    <td>{{ str_limit($profile->body, 250) }}</td>
                                     <td>
                                         <div>
-                                            <a href="{{ action('Admin\NewsController@edit', ['id' => $news->id]) }}">編集</a>
+                                            <a href="{{ action('Admin\ProfileController@edit', ['id' => $profile->id]) }}">編集</a>
                                         </div>
                                         <div>
-                                            <a href="{{-- action('Admin\NewsController@delete', ['id' => $news->id]) --}}">削除</a>
+                                            <a href="{{ action('Admin\ProfileController@delete', ['id' => $profile->id]) }}">削除</a>
                                         </div>
                                     </td>
                                 </tr>

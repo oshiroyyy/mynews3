@@ -31,12 +31,12 @@ class ProfileController extends Controller
         return redirect('admin/profile/create');
     }
     
-    public function edit()
+    public function edit(Request $request)
     {
         //Profile　Modelからデータを取得する
         $profile = Profile::find($request->id);
         if (empty($profile)) {
-            about(404);
+            abort(404);
         }
         return view('admin.profile.edit',['profile_form' => $profile]);
     }
@@ -51,8 +51,16 @@ class ProfileController extends Controller
         unset($profile_form['_token']);
         
         //該当するデータを上書きして保存する
-        $profile->file($profile_form)->save();
+        $profile->fill($profile_form)->save();
         
+        return redirect('admin/profile');
+    }
+    public function delete(Request $request)
+    {
+        //該当するProfile Modelを取得
+        $profile = Profile::find($request->id);
+        // 削除する
+        $profile->delete();
         return redirect('admin/profile');
     }
 }
